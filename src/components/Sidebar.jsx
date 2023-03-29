@@ -33,7 +33,6 @@ function Sidebar() {
           </li>
         </ul>
       </div>
-     
       <div
         className={`flex-1 h-screen overflow-y-auto duration-300 ${
           isSidebarOpen ? "ml-72" : ""

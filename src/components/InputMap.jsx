@@ -10,13 +10,14 @@ const options = [
   { value: ".json,json5", label: "Terria Catalog(.json,.json5)" },
   { value: ".xml", label: "GeoRSs(.xml)" },
   { value: ".glb", label: "gLTf.(glb)" },
-  { value: ".zip", label: "Shapefile (.zip)" },
+  { value: ".shp", label: "Shapefile (.shp)" },
+  { value: ".zip", label: "Zip (.zip)" },
 ];
 
-const InputMap = () => {
+const InputMap = ({fileInputType}) => {
 
   const [selectedOption, setSelectedOption] = useState("");
-  const [fileInputType, setFileInputType] = useState("");
+  const [inputType,setFileInputType] = useState("");
 
   const handleOptionChange = (selectedOption) => {
     setSelectedOption(selectedOption);
@@ -45,7 +46,8 @@ const InputMap = () => {
         className="hidden"
         id="fileInput"
         type="file"
-        accept={fileInputType} 
+        accept={inputType} 
+        onChange = {fileInputType}
       />
     </div>
   );

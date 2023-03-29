@@ -1,16 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = [];
-
 export const fetchMaps = createAsyncThunk("maps/fetchMaps", async () => {
-  const response = await axios.get("http://192.168.6.191:8081/api/maps");
+  const response = await axios.get("http://192.168.6.191:8080/api/basemaps/?limit=10");
   return response.data;
 });
 
 const mapSlice = createSlice({
   name: "maps",
-  initialState,
+  initialState: [],
   reducers: {
     addMap: (state, action) => {
       state.push(action.payload);
@@ -18,7 +16,7 @@ const mapSlice = createSlice({
     },
     editMap: (state, action) => {
       const { id } = action.payload;
-      const existingMapIndex = state.findIndex((map) => map.id === id);
+      const existingMapIndex = state.findIndex((basemap) => basemap.id === id);
       if (existingMapIndex !== -1) {
         state[existingMapIndex] = action.payload;
       } else {
@@ -27,7 +25,7 @@ const mapSlice = createSlice({
     },
     deleteMap: (state, action) => {
       const { id } = action.payload;
-      const existingMapIndex = state.findIndex((map) => map.id === id);
+      const existingMapIndex = state.findIndex((basemap) => basemap.id === id);
       if (existingMapIndex !== -1) {
         state.splice(existingMapIndex, 1);
       } else {
