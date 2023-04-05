@@ -12,32 +12,39 @@ const mapSlice = createSlice({
   reducers: {
     addMap: (state, action) => {
       state.push(action.payload);
-      console.log(action.payload);
     },
     editMap: (state, action) => {
-      const { id } = action.payload;
+      const {id,name,title,file } = action.payload;
       const existingMapIndex = state.findIndex((basemap) => basemap.id === id);
       if (existingMapIndex !== -1) {
-        state[existingMapIndex] = action.payload;
-      } else {
-        console.log(`Map with ID ${id} not found.`);
+        existingMapIndex.name = name;
+        existingMapIndex.title = title;
+        existingMapIndex.file = file;
       }
     },
     deleteMap: (state, action) => {
-      const { id } = action.payload;
-      const existingMapIndex = state.findIndex((basemap) => basemap.id === id);
+      const existingMapIndex = state.findIndex((basemap) => basemap.id === action.payload);
       if (existingMapIndex !== -1) {
-        state.splice(existingMapIndex, 1);
-      } else {
-        console.log(`Map with ID ${id} not found.`);
+        state.splice(state.findIndex(existingMapIndex), 1);
       }
     },
+   
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchMaps.fulfilled, (state, action) => {
-      return action.payload;
-    });
+    builder
+      .addCase(fetchMaps.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchMaps.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.maps = action.payload;
+      })
+      .addCase(fetchMaps.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
+
 });
 
 export const { addMap, editMap, deleteMap } = mapSlice.actions;

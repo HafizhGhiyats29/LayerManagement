@@ -2,27 +2,23 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addMap } from "./mapSlice";
-import InputMap from "../../components/InputMap";
-import InputName from "../../components/InputName";
+import InputMap from "../../components/InputLocal/InputFile";
 import axios from "axios";
-import InputTitle from "../../components/InputTitle";
+import MapList from "./MapList";
+import NameInput from "../../components/InputLocal/NameInput";
 
 const AddMap = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [fileInputType, setFileInputType] = useState(null);
-  const [nameInput, setNameInput] = useState("");
-  const [titleInput, setTitleInput] = useState("");
+  const [input, setInput] = useState();
 
-  const handleOptionChange = (selectedOption) => {
-    setFileInputType(selectedOption?.value ?? null);
-  };
-  const handleNameInputChange = (e) => {
-    setNameInput(e.target.value);
-  };
-  const handleTitleInputChange = (e) => {
-    setTitleInput(e.target.value);
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleFileInput = (e) => {
@@ -34,12 +30,11 @@ const AddMap = () => {
       alert("Please select a file");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("file", fileInputType);
-    formData.append("name", nameInput);
-    formData.append("title", titleInput);
-  
+    formData.append("name", input.name);
+
     axios
       .post("http://192.168.6.177:8080/api/basemaps/", formData, {
         headers: {
@@ -60,33 +55,39 @@ const AddMap = () => {
         alert("Failed to add map. Please try again.");
       });
   };
-  
+
   return (
-    <div className="relative flex flex-col items-center justify-center py-20 px-40 mx-auto my-auto rounded-2xl">
-      <form
-        encType="multipart/form-data"
-        className="bg-blue-400 flex justify-between w-full items-center py-2"
-      >
-        <Link to={"/"}>
-          <button className="bg-white hover:bg-blue-200 text-blue-500 py-0.5 px-4 rounded-md transition-colors duration-300 mx-2">
-            Back
-          </button>
-        </Link>
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-600 border-2 text-white py-0.5 px-4 rounded-md transition-colors duration-300 mx-2"
-          onClick={handleAddMap}
+    <form
+      encType="multipart/form-data"
+      className="bg-blue-dark flex flex-col justify-center h-screen items-center text-white"
+    >
+      <div className="flex justify-between items-center mt-1 py-5 px-14 w-full">
+        <h3 className="text-2xl font-bold">Map Data Management</h3>
+        <Link
+          to={"/"}
+          className="border-2 text-white py-3 font-bold text-xl px-8 rounded-md transition-colors duration-300"
         >
           Done
-        </button>
-      </form>
-      <div className="py-10 px-28 text-center w-full bg-slate-300">
-        <h3 className="text-start mx-36">Add Local File</h3>
-        <InputName value={nameInput} onChange={handleNameInputChange} />
-        <InputTitle  value={titleInput} onChange={handleTitleInputChange} />
-        <InputMap fileInputType={handleFileInput} />
+        </Link>
       </div>
-    </div>
+      <div className="flex gap-7 w-full h-[30rem] mb-4">
+        <div className="w-1/2 rounded-md bg-white p-8 ml-14 relative justify-between text-black">
+          <MapList />
+        </div>
+        <div className="w-1/2 rounded-md bg-white p-8 mr-14 relative justify-between text-black">
+          <div className="">
+            <h3 className="">Add Local Data</h3>
+            <button type="submit" className="bg-blue" onClick={handleAddMap}>
+              Upload
+            </button>
+            <div className="mb-4">
+              <NameInput NameInput={handleChange} />
+              <InputMap fileInputType={handleFileInput} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   );
 };
 
