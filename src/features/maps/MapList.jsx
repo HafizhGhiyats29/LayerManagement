@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteMap } from "./mapSlice";
 import { FaEdit, FaTimes} from "react-icons/fa";
+import { FiPlus } from "react-icons/fi";
 import axios from "axios";
 
 const MapList = () => {
@@ -51,7 +52,7 @@ const MapList = () => {
 
   return (
     <div className="w-50">
-    <div>search...</div>
+    <div className=" flex justify-between px-3 py-2 border bg-gray">Jawa Barat <FiPlus/></div>
       <div className="relative px-4 gap">
         {data.map((basemap) => (
           <div className=" py-2 px-2 rounded-md" key={basemap.id}>

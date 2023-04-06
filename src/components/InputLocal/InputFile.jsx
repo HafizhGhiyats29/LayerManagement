@@ -31,16 +31,30 @@ const InputFile = ({ fileInputType }) => {
         onChange={handleOptionChange}
         options={options}
         placeholder="File type"
-        className="relative bg-gray  rounded-md"
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 5,
+          colors: {
+            ...theme.colors,
+            neutral0: "#D9D9D9",
+            primary25: "#999999",
+            primary50: "#5b5b5b",
+            primary: "black",
+          },
+        })}
       />
+
       <div className="">
-        <label htmlFor="fileInput" className="cursor-pointer relative bg-gray py-1 px-5 flex rounded-md">
-        <p className=" py-1 px-4 border rounded-md">
-        Browse
-        </p>
+        <label
+          htmlFor="fileInput"
+          placeholder="Select File"
+          className="cursor-pointer relative top-5 bg-gray py-1 px-5 flex items-center rounded-md justify-between"
+        >
+          <p>Select File</p>
+          <p className=" py-1 px-4 border rounded-md">Browse</p>
         </label>
         <input
-          className="hidden"
+          className="hidden "
           id="fileInput"
           type="file"
           accept={inputType}
