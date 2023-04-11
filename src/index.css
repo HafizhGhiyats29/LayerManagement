@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+input[type="file"]::file-selector-button {
+  /* Tambahkan gaya sesuai kebutuhan Anda */
+display: none;
+}
+
+
+
+
+
+

@@ -5,11 +5,9 @@ const options = [
   { value: ".geojson", label: "GeoJSON(.geojson)" },
   { value: ".kml,", label: "KML (.kml)" },
   { value: ".kmz", label: "KMZ(.kmz)" },
-  { value: ".geotiff", label: "GeoTiff(.geotiff)" },
+  { value: ".geotiff, .tif , .tiff", label: "GeoTiff(.geotiff, .tif, .tiff)" },
   { value: ".dted", label: "DTED(.dted)" },
   { value: ".nitf", label: "Nitf(.nitf)" },
-  { value: ".tiff", label: "Tiff(.tiff)" },
-  { value: ".tif", label: "Tif.(tif)" },
   { value: ".shp", label: "Shapefile (.shp)" },
   { value: ".adrg", label: "ADRG (.adrg)" },
   { value: ".jp2", label: "JP2 (.jp2)" },
@@ -30,7 +28,7 @@ const InputFile = ({ fileInputType }) => {
         value={selectedOption}
         onChange={handleOptionChange}
         options={options}
-        placeholder="File type"
+        placeholder="Select file type"
         theme={(theme) => ({
           ...theme,
           borderRadius: 5,
@@ -48,13 +46,12 @@ const InputFile = ({ fileInputType }) => {
         <label
           htmlFor="fileInput"
           placeholder="Select File"
-          className="cursor-pointer relative top-5 bg-gray py-1 px-5 flex items-center rounded-md justify-between"
+          className="cursor-pointer relative top-5 bg-gray py-1 px-5 flex items-center rounded-md justify-end"
         >
-          <p>Select File</p>
           <p className=" py-1 px-4 border rounded-md">Browse</p>
         </label>
         <input
-          className="hidden "
+          className="absolute bottom-64 left-9 text-gray-dark"
           id="fileInput"
           type="file"
           accept={inputType}

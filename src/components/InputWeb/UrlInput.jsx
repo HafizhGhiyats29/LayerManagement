@@ -1,33 +1,41 @@
+
 import React, { useState } from "react";
 import Select from "react-select";
 
 const fileTypeOptions = [
-  { value: "image", label: "Image" },
-  { value: "video", label: "Video" },
-  { value: "audio", label: "Audio" },
+  { value: ".geojson", label: "GeoJSON(.geojson)" },
+  { value: ".kml,", label: "KML (.kml)" },
+  { value: ".kmz", label: "KMZ(.kmz)" },
+  { value: ".geotiff", label: "GeoTiff(.geotiff)" },
+  { value: ".dted", label: "DTED(.dted)" },
+  { value: ".nitf", label: "Nitf(.nitf)" },
+  { value: ".tiff", label: "Tiff(.tiff)" },
+  { value: ".tif", label: "Tif.(tif)" },
+  { value: ".shp", label: "Shapefile (.shp)" },
+  { value: ".adrg", label: "ADRG (.adrg)" },
+  { value: ".jp2", label: "JP2 (.jp2)" },
 ];
-const UrlInput = ({ onURLInputChange }) => {
+
+const UrlInput = ({ url , urlChangeHandler}) => {
   const [selectedType, setSelectedType] = useState("");
-  const [url, setURL] = useState("");
+
+  const [urlLocked, setUrlLocked] = useState(false);
 
   const handleTypeChange = (selectedOption) => {
-    setSelectedType(selectedOption.value);
+    setSelectedType(selectedOption);
   };
 
-  const handleURLChange = (e) => {
-    setURL(e.target.value);
+  const handleLockUrl = () => {
+    setUrlLocked(!urlLocked);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onURLInputChange(url, selectedType);
-  };
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <Select
         value={fileTypeOptions.find((option) => option.value === selectedType)}
         onChange={handleTypeChange}
         options={fileTypeOptions}
+        placeholder="Select file or web service type"
         theme={(theme) => ({
           ...theme,
           borderRadius: 5,
@@ -38,17 +46,32 @@ const UrlInput = ({ onURLInputChange }) => {
             primary: "black",
           },
         })}
+        menuPlacement="top"
       />
-      <input
-        className="w-full p-2 bg-gray rounded-md mt-5"
-        type="url"
-        placeholder="Enter URL"
-        value={url}
-        onChange={handleURLChange}
-        required
-      />
-    </form>
+      <div className="relative">
+        <input
+          className={`w-full p-2 bg-gray rounded-md mt-5 ${
+            urlLocked ? "text-gray-dark" : "text-black"
+          }`}
+          type="url"
+          placeholder="Drop link here"
+          value={url}
+          onChange={urlChangeHandler}
+          required
+          disabled={urlLocked}
+        />
+        <button
+          type="button"
+          className="bg-gray absolute right-4 top-6 px-7 p-1 text-black rounded-md border "
+          onClick={handleLockUrl}
+        >
+          {urlLocked ? "Cancel" : "Add"}
+        </button>
+      </div>
+    </div>
   );
 };
 
 export default UrlInput;
+
+

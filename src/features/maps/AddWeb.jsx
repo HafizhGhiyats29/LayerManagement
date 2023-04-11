@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMap } from "./mapSlice";
 import axios from "axios";
-import NameInput from "../../components/InputLocal/NameInput";
+import NameInput from "../../components/NameInput";
 import UrlInput from "../../components/InputWeb/UrlInput";
 
 const AddWeb = () => {
@@ -21,12 +21,12 @@ const AddWeb = () => {
   };
 
   const handleURLInputChange = (e) => {
-    setUrlInput(e.target.url);
+    setUrlInput(e.target.value);
   };
 
   const handleAddData = (e) => {
     e.preventDefault();
-    if (!urlInputType.url) {
+    if (!urlInputType) {
       alert("Please enter a URL");
       return;
     }
@@ -59,7 +59,7 @@ const AddWeb = () => {
         <h3 className="font-bold">Add Web Data</h3>
         <button
           type="submit"
-          className="bg-blue py-1 px-9 border rounded-sm"
+          className="bg-blue py-1 px-9 font-bold border rounded-full"
           onClick={handleAddData}
         >
           Upload
@@ -67,7 +67,7 @@ const AddWeb = () => {
       </div>
       <div className="mb-4">
         <NameInput NameInput={handleChange} />
-        <UrlInput onURLInputChange={handleURLInputChange} />
+        <UrlInput url={urlInputType} urlChangeHandler={handleURLInputChange} />
       </div>
     </form>
   );

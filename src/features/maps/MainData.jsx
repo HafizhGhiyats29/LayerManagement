@@ -1,8 +1,7 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MapList from "./MapList";
 import AddMap from "./AddMap";
-import Search from "../../components/Seacrh";
 import AddWeb from "./AddWeb";
 
 const MainMap = () => {
@@ -20,9 +19,6 @@ const MainMap = () => {
       <div className="flex gap-7 w-full h-[30rem] mb-4">
         <div className="w-1/2 overflow-y-auto  bg-white py-4 px-6 ml-14  relative justify-between text-black rounded-xl">
           <div className="sticky top-0 py-4 bg-white rounded-md">
-            <Search />
-          </div>
-          <div className="py-4">
             <MapList />
           </div>
         </div>

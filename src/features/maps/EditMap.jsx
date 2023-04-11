@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { editMap } from "./mapSlice";
-import InputMap from "../../components/InputLocal/InputFile";
 import axios from "axios";
+import InputFile from "../../components/InputLocal/InputFile";
+import NameInput from "../../components/NameInput";
 
 const EditMap = () => {
   const navigate = useNavigate();
@@ -46,38 +47,22 @@ const EditMap = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center py-20 px-40 mx-auto my-auto rounded-2xl">
-      <div className="flex justify-between w-full items-center py-2">
-        <Link
-          to={"/"}
-          className="text-blue-500 py-0.5 px-4 rounded-md transition-colors duration-300 mx-2"
-        >
-          Back
-        </Link>
-        <button
-          className="border-2 text-white py-0.5 px-4 rounded-md transition-colors duration-300 mx-2"
-          onClick={handleEditMap}
-        >
-          Done
-        </button>
-      </div>
-      <div className="py-10 px-28 text-center w-full ">
-        <h3 className="text-start mx-36">Add Local File</h3>
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">name:</label>
-          <input
-            type="text"
-            name="name"
-            onChange={handleChange}
-            value={input.name}
-            className="w-full p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50"
-            placeholder="Write a name"
-            autoFocus
-          />
-        </div>
-        <InputMap fileInputType={handleFileInput} />
-      </div>
+    <div>
+    <div className="flex justify-between my-3">
+      <h3 className="font-bold">Edit Local Data</h3>
+      <button
+        type="submit"
+        className="bg-blue py-1 px-9 border rounded-sm"
+        onClick={handleEditMap}
+      >
+        Upload
+      </button>
     </div>
+    <div className="mb-4">
+      <NameInput NameInput={handleChange} />
+      <InputFile fileInputType={handleFileInput} />
+    </div>
+  </div>
   );
 };
 
