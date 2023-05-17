@@ -3,6 +3,7 @@ import Sidebar from "./components/Sidebar";
 
 import MainData from "./features/maps/MainData";
 import EditMap from "./features/maps/EditMap";
+import BaseMapSetting from "./pages/BaseMapSetting";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Sidebar />} />
         <Route path="/add-data" element={<MainData />} />
         <Route path="/edit-map/:id" element={<EditMap />} />
+        <Route path="/map-setting" element={<BaseMapSetting />}/>
       </Routes>
     </div>
   );

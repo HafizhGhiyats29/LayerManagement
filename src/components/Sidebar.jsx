@@ -31,10 +31,12 @@ function Sidebar() {
               </div>
             </li>
           </ul>
-          <button className="absolute flex text-black bottom-0 mb-6 py-4 px-6">
-            <SlSettings className="mr-2 text-2xl font-bold" />
-            Map Setting
-          </button>
+          <Link to="map-setting">
+            <button className="absolute flex text-black bottom-0 mb-6 py-4 px-6">
+              <SlSettings className="mr-2 text-2xl font-bold" />
+              Map Setting
+            </button>
+          </Link>
         </div>
         <button
         className={`absolute top-7 -right-6 transition duration-300 ${
