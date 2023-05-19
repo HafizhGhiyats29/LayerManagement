@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deleteMap } from "./mapSlice";
-import { FaEdit, FaTimes } from "react-icons/fa";
-import axios from "axios";
-import Search from "../../components/Seacrh";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { FaEdit, FaTimes } from 'react-icons/fa';
+import axios from 'axios';
+import { deleteMap } from './mapSlice';
+import Search from '../../components/Seacrh';
 
-const MapList = () => {
+function MapList() {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [limit] = useState(10);
   const [refresh, setRefresh] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const handleSearch = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
     setSearchValue(value);
   };
 
@@ -24,13 +24,13 @@ const MapList = () => {
         `http://192.168.6.177:8081/api/basemaps/?limit=${limit}`,
         {
           headers: {
-            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Origin': '*',
           },
           proxy: {
-            host: "192.168.6.134",
+            host: '192.168.6.134',
             port: 3000,
           },
-        }
+        },
       );
       setData(result.data.data);
       console.log(result.data.data);
@@ -42,10 +42,10 @@ const MapList = () => {
     try {
       await axios.delete(`http://192.168.6.177:8081/api/basemaps/${id}`, {
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          'Access-Control-Allow-Origin': '*',
         },
         proxy: {
-          host: "192.168.6.134",
+          host: '192.168.6.134',
           port: 3000,
         },
       });
@@ -57,14 +57,12 @@ const MapList = () => {
     }
   };
 
-  const filteredData = data.filter((basemap) => {
-    return basemap.name.toLowerCase().includes(searchValue.toLowerCase());
-  });
+  const filteredData = data.filter((basemap) => basemap.name.toLowerCase().includes(searchValue.toLowerCase()));
 
   return (
     <div className="w-full">
       <div className="sticky top-4 z-10 bg-white h-14">
-        <Search state={searchValue} setState={handleSearch}/>
+        <Search state={searchValue} setState={handleSearch} />
       </div>
       {filteredData.map((basemap) => (
         <div
@@ -89,5 +87,5 @@ const MapList = () => {
       ))}
     </div>
   );
-};
+}
 export default MapList;

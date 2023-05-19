@@ -1,11 +1,36 @@
+/* eslint-disable no-nested-ternary */
 import React, { useMemo } from 'react';
-import { useTable, usePagination } from 'react-table';
+import { useTable, usePagination, useSortBy } from 'react-table';
+import { FaSortAlphaDown } from 'react-icons/fa';
+import { MdOutlineDeleteForever, MdOutlineEdit } from 'react-icons/md';
 import PaginationButton from './BaseMapSetting/PaginationButton';
 
 function TableWithPagination({
-  tableColumns = [], tableDatas = [], isPaginate, isShowingEntries, headerStyle = '', rowStyle,
+  tableColumns = [], tableDatas = [], isPaginate, isShowingEntries, headerStyle = '', rowStyle, onDeleteAction, onEditAction,
 }) {
-  const columns = useMemo(() => tableColumns, []);
+  const columns = useMemo(() => [
+    {
+      Header: 'No',
+      Cell: ({ row }) => (
+        <h1>{row.index + 1}</h1>
+      ),
+    },
+    ...tableColumns,
+    {
+      Header: 'Action',
+      accessor: 'no',
+      Cell: ({ row }) => (
+        <div className="flex justify-center items-center text-xl gap-4">
+          <button type="button" onClick={() => console.log(row)}>
+            <MdOutlineEdit />
+          </button>
+          <button type="button">
+            <MdOutlineDeleteForever />
+          </button>
+        </div>
+      ),
+    },
+  ], []);
   const data = useMemo(() => tableDatas, []);
 
   const {
@@ -31,7 +56,7 @@ function TableWithPagination({
       pageSize: 10,
       pageIndex: 0,
     },
-  }, usePagination);
+  }, useSortBy, usePagination);
 
   console.log({
     pageSize, pageIndex, pageCount, canPreviousPage, canNextPage,
@@ -43,8 +68,9 @@ function TableWithPagination({
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())} className="relative">
                   {column.render('Header')}
+                  {column.id !== 'no' && <FaSortAlphaDown className="absolute right-10 top-1" />}
                 </th>
               ))}
             </tr>
@@ -56,7 +82,7 @@ function TableWithPagination({
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} className={rowStyle}>
+                  <td {...cell.getCellProps()} className={`${rowStyle}`}>
                     {cell.render('Cell')}
                   </td>
                 ))}
