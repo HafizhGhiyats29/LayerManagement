@@ -5,51 +5,52 @@ import { Link } from 'react-router-dom';
 function SideBarMapSetting () {
     const [isActive, setIsActive] = useState([
         {
-            name: 'first',
-            value: true
+            name: 'firstNavigation',
+            value: true,
+            href: '/map-setting'
         },
         {
-            name: 'second',
-            value: false
+            name: 'secondNavigation',
+            value: false,
+            // href: link ke layer management
         },
         {
-            name: 'third',
-            value: false
+            name: 'thirdNavigation',
+            value: false,
+            // href: link ke layer group
         }
     ]);
     
-    const onClickSidebarHandler = ({target}) => {
-        const nameValue = target.getAttribute('name');
-        setIsActive(prevState => (
-            prevState.map(el => {
-                if(nameValue === el.name) {
-                    console.log(nameValue === el.name);
-                    el.value = true
-                }
-                el.value = false;
-                return el;
-            })
-        ))
+    const onClickSidebarHandler = ({ target }) => {
+        let nameValue = target.getAttribute('name');
+
+        // get parrent element to make sure clicked element has name attribute
+        if(target.getAttribute('element') === 'icon'){
+            nameValue = target.parentElement.getAttribute('name');
+        }
+
+        // get index of clicked element
+        const index = isActive.findIndex(clickedElement => clickedElement.name === nameValue)
+        setIsActive(prevState => {
+        prevState.forEach((element, i) => {
+            i === index ? element.value = true : element.value = false
+        })
+        return [
+            ...prevState,
+        ]
+        })
+
     }
     return (
             <section
             className="w-[5%] bg-blue-thin text-white flex flex-col justify-center items-center h-screen gap-5" >
-                <div className={`${isActive[0].value && 'bg-white bg-opacity-40'} w-full flex justify-center items-center`} onClick={onClickSidebarHandler}>
-                    <Link to="/map-setting">
-                        <BsMap className="text-3xl" name="first"/>
-                    </Link>
-                </div>
-                <div className={`${isActive[1].value && 'bg-white bg-opacity-40'} w-full flex justify-center items-center`} onClick={onClickSidebarHandler}>
-                    <Link to="/map-setting">
-                        <BsMap className="text-3xl" name="second"/>
-                    </Link>
-                </div>
-                <div className={`${isActive[2].value && 'bg-white bg-opacity-40'} w-full flex justify-center items-center`} onClick={onClickSidebarHandler} >
-                    <Link to="/map-setting">
-                        <BsMap className="text-3xl" name="third"/>
-                    </Link>
-                </div>
-                
+                {isActive.map((activeEl) => (
+                    <div className={`${activeEl.value && 'bg-white bg-opacity-40'} w-full flex justify-center items-center `} onClick={onClickSidebarHandler} key={activeEl.name}>
+                        <Link to={activeEl.href} className=" w-full flex justify-center items-center" name={activeEl.name}>
+                            <BsMap className="text-3xl " element="icon" />
+                        </Link>
+                    </div>
+                ))}
             </section>
     )
 }
