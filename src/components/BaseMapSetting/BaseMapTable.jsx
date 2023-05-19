@@ -1,16 +1,27 @@
 import React from 'react';
-import { useTable } from 'react-table';
+import { FaSortAlphaDown } from 'react-icons/fa';
+import TableWithPagination from '../TableWithPagination';
+import data from '../../MOCK_DATA.json';
 
 function BaseMapTable() {
-  const {
-    prepareRow,
-    rows,
-  } = useTable({
-    columns: [],
-    data: [],
-  });
+  const tableColumns = [
+    {
+      Header: 'No',
+      accessor: 'no',
+    },
+    {
+      Header: 'Map',
+      accessor: 'map',
+    },
+    {
+      Header: 'Source',
+      accessor: 'source',
+    },
+  ];
   return (
-    <table />
+    <section>
+      <TableWithPagination tableColumns={tableColumns} tableDatas={data} headerStyle="bg-[#4893E6] text-white" rowStyle="p-1.5 border-b" />
+    </section>
   );
 }
 
