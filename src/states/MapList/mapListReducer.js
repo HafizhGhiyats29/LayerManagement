@@ -504,6 +504,7 @@ const initialState = [{ no: 1, map: 'Smolensk', source: 'NuncCommodo.ppt' },
 const mapListReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ACTION_TYPE.deleteMapListType:
+      console.log(action.payload.id);
       return state.filter((map) => map.no !== action.payload.id);
     case ACTION_TYPE.putMapListType:
       const index = state.findIndex((mapData) => mapData.no === action.type.id);
