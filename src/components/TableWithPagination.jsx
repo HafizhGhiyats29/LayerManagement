@@ -88,7 +88,7 @@ function TableWithPagination({
 
   return (
     <div>
-      <table {...getTableProps()} className="w-full mt-8 p-2 text-center">
+      <table {...getTableProps()} className="w-full mt-8 p-2 text-center table-fixed">
         <thead className={`p-4 ${headerStyle}`}>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>

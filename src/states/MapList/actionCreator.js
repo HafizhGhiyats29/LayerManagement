@@ -14,3 +14,10 @@ export const editMapListActionCreator = ({ id, newData }) => ({
     newData,
   },
 });
+
+export const searchMapListActionCreator = (keyword) => ({
+  type: ACTION_TYPE.searchMapListType,
+  payload: {
+    keyword,
+  },
+});

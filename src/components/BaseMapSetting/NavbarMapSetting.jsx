@@ -26,7 +26,12 @@ function NavbarMapSetting() {
             subnav.isActive = false;
           }
           return (
-            <NavBaseMap navName={subnav.navName} href={subnav.href} isActive={subnav.isActive} />
+            <NavBaseMap
+              navName={subnav.navName}
+              href={subnav.href}
+              isActive={subnav.isActive}
+              key={subnav.href}
+            />
           );
         })}
       </nav>

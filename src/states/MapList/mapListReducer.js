@@ -513,6 +513,18 @@ const mapListReducer = (state = initialState, action = {}) => {
         ...action.payload.newData,
       };
       return [...state];
+    case ACTION_TYPE.searchMapListType:
+      if (action.payload.keyword === '') {
+        return initialState;
+      }
+      const mapIndex = state.findIndex(
+        (mapItem) => mapItem.map.toLowerCase().includes(action.payload.keyword.toLowerCase()),
+      );
+      if (mapIndex === -1) {
+        return [];
+      }
+      console.log(action.payload.keyword);
+      return [{ ...state[mapIndex] }];
     default: return state;
   }
 };
