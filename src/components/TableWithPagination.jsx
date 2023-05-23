@@ -28,8 +28,7 @@ function TableWithPagination({
     {
       Header: 'Action',
       accessor: 'no',
-      Cell: ({ row }) => {
-        console.log(row);
+      Cell: () => {
         const [isShowModalDelete, setIsShowModalDelete] = useState(false);
         const onClickDeleteButton = () => {
           setIsShowModalDelete(true);

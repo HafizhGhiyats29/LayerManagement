@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import NavBaseMap from './NavBaseMap';
 
-function NavbarMapSetting({ isActive }) {
+function NavbarMapSetting() {
+  const location = useLocation();
+  const [subNav] = useState([
+    {
+      navName: 'Map List',
+      href: '/',
+      isActive: true,
+    },
+    {
+      navName: 'Add Map',
+      href: '/add-map',
+      isActive: false,
+    },
+  ]);
   return (
-    <section className={`${isActive && 'text-[rgba(0,0,255,.7)] '} mt-10`}>
+    <section className=" mt-10">
       <nav className="flex items-center gap-8">
-        <NavBaseMap navName="Map List" isActive />
-        <NavBaseMap navName="Add Map" />
+        {subNav.map((subnav) => {
+          if (location.pathname === `/map-setting${subnav.href}`) {
+            subnav.isActive = true;
+          } else {
+            subnav.isActive = false;
+          }
+          return (
+            <NavBaseMap navName={subnav.navName} href={subnav.href} isActive={subnav.isActive} />
+          );
+        })}
       </nav>
       <hr className="text-black" />
     </section>

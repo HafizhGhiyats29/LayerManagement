@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Sidebar />} />
           <Route path="/add-data" element={<MainData />} />
           <Route path="/edit-map/:id" element={<EditMap />} />
-          <Route path="/map-setting" element={<BaseMapSettingPage />} />
+          <Route path="/map-setting/*" element={<BaseMapSettingPage />} />
         </Routes>
       </div>
     </Provider>

@@ -1,12 +1,9 @@
 import React from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { MdKeyboardArrowRight } from 'react-icons/md';
-import useInput from '../../hooks/useInput';
 import NavbarMapSetting from './NavbarMapSetting';
-import MapListContent from './MapListContent';
 
-function BaseMapContent() {
-  const [searchKeywordValue, onSearchKeywordValueChange] = useInput();
+function BaseMapContent({ children }) {
   return (
     <section className="py-12 px-6 w-11/12">
       <article className="flex items-center justify-between px-6">
@@ -18,12 +15,10 @@ function BaseMapContent() {
       </article>
       <article>
         <header>
-          <NavbarMapSetting isActive />
+          <NavbarMapSetting />
         </header>
         <main>
-          <Routes>
-            <Route path="/" element={<MapListContent searchKeywordValue={searchKeywordValue} onSearchKeywordValueChange={onSearchKeywordValueChange} />} />
-          </Routes>
+          {children}
         </main>
       </article>
 
