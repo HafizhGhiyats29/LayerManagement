@@ -1,11 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { MdKeyboardArrowRight } from 'react-icons/md';
-import BaseMapCategories from './BaseMapCategories';
-import BaseMapSearch from './BaseMapSearch';
-import BaseMapTable from './BaseMapTable';
 import useInput from '../../hooks/useInput';
 import NavbarMapSetting from './NavbarMapSetting';
+import MapListContent from './MapListContent';
 
 function BaseMapContent() {
   const [searchKeywordValue, onSearchKeywordValueChange] = useInput();
@@ -23,16 +21,9 @@ function BaseMapContent() {
           <NavbarMapSetting isActive />
         </header>
         <main>
-          <section className="flex gap-6 mt-10">
-            <BaseMapCategories />
-            <BaseMapSearch
-              searchKeywordValue={searchKeywordValue}
-              onSearchKeywordValueChange={onSearchKeywordValueChange}
-            />
-          </section>
-          <section>
-            <BaseMapTable />
-          </section>
+          <Routes>
+            <Route path="/" element={<MapListContent searchKeywordValue={searchKeywordValue} onSearchKeywordValueChange={onSearchKeywordValueChange} />} />
+          </Routes>
         </main>
       </article>
 
