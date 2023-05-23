@@ -1,25 +1,25 @@
-import { useState } from "react";
-import Select from "react-select";
+import React, { useState } from 'react';
+import Select from 'react-select';
 
 const options = [
-  { value: ".geojson", label: "GeoJSON(.geojson)" },
-  { value: ".kml,", label: "KML (.kml)" },
-  { value: ".kmz", label: "KMZ(.kmz)" },
-  { value: ".geotiff, .tif , .tiff", label: "GeoTiff(.geotiff, .tif, .tiff)" },
-  { value: ".dted", label: "DTED(.dted)" },
-  { value: ".nitf", label: "Nitf(.nitf)" },
-  { value: ".shp", label: "Shapefile (.shp)" },
-  { value: ".adrg", label: "ADRG (.adrg)" },
-  { value: ".jp2", label: "JP2 (.jp2)" },
+  { value: '.geojson', label: 'GeoJSON(.geojson)' },
+  { value: '.kml,', label: 'KML (.kml)' },
+  { value: '.kmz', label: 'KMZ(.kmz)' },
+  { value: '.geotiff, .tif , .tiff', label: 'GeoTiff(.geotiff, .tif, .tiff)' },
+  { value: '.dted', label: 'DTED(.dted)' },
+  { value: '.nitf', label: 'Nitf(.nitf)' },
+  { value: '.shp', label: 'Shapefile (.shp)' },
+  { value: '.adrg', label: 'ADRG (.adrg)' },
+  { value: '.jp2', label: 'JP2 (.jp2)' },
 ];
 
-const InputFile = ({ fileInputType }) => {
-  const [selectedOption, setSelectedOption] = useState("");
-  const [inputType, setFileInputType] = useState("");
+function InputFile({ fileInputType }) {
+  const [selectedOption, setSelectedOption] = useState('');
+  const [inputType, setFileInputType] = useState('');
 
-  const handleOptionChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
-    setFileInputType(selectedOption.value);
+  const handleOptionChange = (selectOption) => {
+    setSelectedOption(selectOption);
+    setFileInputType(selectOption.value);
   };
 
   return (
@@ -34,10 +34,10 @@ const InputFile = ({ fileInputType }) => {
           borderRadius: 5,
           colors: {
             ...theme.colors,
-            neutral0: "#D9D9D9",
-            primary25: "#999999",
-            primary50: "#5b5b5b",
-            primary: "black",
+            neutral0: '#D9D9D9',
+            primary25: '#999999',
+            primary50: '#5b5b5b',
+            primary: 'black',
           },
         })}
       />
@@ -60,6 +60,6 @@ const InputFile = ({ fileInputType }) => {
       </div>
     </div>
   );
-};
+}
 
 export default InputFile;

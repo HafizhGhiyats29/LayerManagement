@@ -4,7 +4,6 @@ import TableWithPagination from '../TableWithPagination';
 
 function BaseMapTable() {
   const { listMap } = useSelector((states) => states);
-  console.log(listMap);
   const tableColumns = [
     {
       Header: 'Map',

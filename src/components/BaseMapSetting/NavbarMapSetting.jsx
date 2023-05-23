@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBaseMap from './NavBaseMap';
 
-function MapList({ isActive }) {
+function NavbarMapSetting({ isActive }) {
   return (
     <section className={`${isActive && 'text-[rgba(0,0,255,.7)] '} mt-10`}>
       <nav className="flex items-center gap-8">
@@ -13,4 +13,4 @@ function MapList({ isActive }) {
   );
 }
 
-export default MapList;
+export default NavbarMapSetting;

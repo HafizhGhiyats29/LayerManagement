@@ -1,7 +1,7 @@
 import React from 'react';
 
 function PaginationButton({
-  totalPage, gotoPageFunction, canPreviousPage, canNextPage, previousPage, nextPage, activePage,
+  gotoPageFunction, canPreviousPage, canNextPage, previousPage, nextPage, activePage,
 }) {
   return (
     <div className="flex  gap-5">

@@ -57,7 +57,9 @@ function MapList() {
     }
   };
 
-  const filteredData = data.filter((basemap) => basemap.name.toLowerCase().includes(searchValue.toLowerCase()));
+  const filteredData = data.filter(
+    (basemap) => basemap.name.toLowerCase().includes(searchValue.toLowerCase()),
+  );
 
   return (
     <div className="w-full">
@@ -78,6 +80,7 @@ function MapList() {
               <button
                 onClick={() => handleDeleteMap(basemap.id)}
                 className="px-2 py-1"
+                type="button"
               >
                 <FaTimes />
               </button>

@@ -1,13 +1,22 @@
 /* eslint-disable no-nested-ternary */
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import { FaSortAlphaDown } from 'react-icons/fa';
 import { MdOutlineDeleteForever, MdOutlineEdit } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+import { deleteMapListActionCreator } from '../states';
 import PaginationButton from './BaseMapSetting/PaginationButton';
+import ModalDelete from './ModalDelete';
 
 function TableWithPagination({
-  tableColumns = [], tableDatas = [], isPaginate, isShowingEntries, headerStyle = '', rowStyle, onDeleteAction, onEditAction,
+  tableColumns = [], tableDatas = [], headerStyle = '', rowStyle,
 }) {
+  const dispatch = useDispatch();
+
+  const onDeleteMapHandler = (id) => {
+    dispatch(deleteMapListActionCreator(id));
+  };
+
   const columns = useMemo(() => [
     {
       Header: 'No',
@@ -19,19 +28,32 @@ function TableWithPagination({
     {
       Header: 'Action',
       accessor: 'no',
-      Cell: ({ row }) => (
-        <div className="flex justify-center items-center text-xl gap-4">
-          <button type="button" onClick={() => console.log(row)}>
-            <MdOutlineEdit />
-          </button>
-          <button type="button">
-            <MdOutlineDeleteForever />
-          </button>
-        </div>
-      ),
+      Cell: ({ row }) => {
+        console.log(row);
+        const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+        const onClickDeleteButton = () => {
+          setIsShowModalDelete(true);
+        };
+        return (
+          <div className="flex justify-center items-center text-xl gap-4">
+            <button type="button" onClick={() => console.log(tableDatas)}>
+              <MdOutlineEdit />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onClickDeleteButton();
+              }}
+            >
+              <MdOutlineDeleteForever />
+            </button>
+            <ModalDelete isShow={isShowModalDelete} onDelete={onDeleteMapHandler} />
+          </div>
+        );
+      },
     },
   ], []);
-  const data = useMemo(() => tableDatas, []);
+  const data = useMemo(() => tableDatas, [tableDatas]);
 
   const {
     prepareRow,
@@ -46,7 +68,6 @@ function TableWithPagination({
     canNextPage,
     canPreviousPage,
     state: {
-      pageSize,
       pageIndex,
     },
   } = useTable({
@@ -58,9 +79,6 @@ function TableWithPagination({
     },
   }, useSortBy, usePagination);
 
-  console.log({
-    pageSize, pageIndex, pageCount, canPreviousPage, canNextPage,
-  });
   return (
     <div>
       <table {...getTableProps()} className="w-full mt-8 p-2 text-center">
@@ -70,7 +88,7 @@ function TableWithPagination({
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())} className="relative">
                   {column.render('Header')}
-                  {column.id !== 'no' && <FaSortAlphaDown className="absolute right-10 top-1" />}
+                  {column.Header !== 'No' && <FaSortAlphaDown className="absolute right-10 top-1" />}
                 </th>
               ))}
             </tr>
