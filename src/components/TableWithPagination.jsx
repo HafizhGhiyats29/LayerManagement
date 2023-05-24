@@ -26,7 +26,6 @@ function TableWithPagination({
   };
 
   const onDeleteMapHandler = (id) => {
-    console.log(id);
     dispatch(deleteMapListActionCreator(id));
     onCancelDeleteMapHandler();
   };

@@ -6,7 +6,7 @@ import BaseMapContent from '../components/BaseMapSetting/BaseMapContent';
 import MapListContent from '../components/BaseMapSetting/MapListContent';
 import useInput from '../hooks/useInput';
 import { searchMapListActionCreator } from '../states';
-import OnlineSource from '../components/InputWeb/OnlineSource';
+import AddMapContent from '../components/BaseMapSetting/AddMapContent';
 
 function BaseMapSettingPage() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function BaseMapSettingPage() {
   };
 
   return (
-    <article className="flex">
+    <article className="flex bg-[#F5F5F5]">
       <SideBarMapSetting />
       <Routes>
         <Route path="/" element={<BaseMapContent><MapListContent searchKeywordValue={searchKeywordValue} onSearchKeywordValueChange={onChangeSearchKeyword} /></BaseMapContent>} />
@@ -26,7 +26,7 @@ function BaseMapSettingPage() {
           path="/add-map"
           element={(
             <BaseMapContent>
-              <OnlineSource />
+              <AddMapContent />
             </BaseMapContent>
             )}
         />

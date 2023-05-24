@@ -1,5 +1,5 @@
-import mapListReducer from './MapListReducer';
-import ACTION_TYPE from './mapListActionType';
+import mapListReducer from '../MapListReducer';
+import ACTION_TYPE from '../mapListActionType';
 
 /**
  * test case scenario
@@ -115,9 +115,11 @@ describe('Map List Reducer', () => {
     const action = {
       type: ACTION_TYPE.addMapListType,
       payload: {
-        id: 'asdsa',
-        map: 'map data baru',
-        source: 'mapBaru.tiff',
+        newData: {
+          id: 'asdsa',
+          map: 'map data baru',
+          source: 'mapBaru.tiff',
+        },
       },
     };
 
