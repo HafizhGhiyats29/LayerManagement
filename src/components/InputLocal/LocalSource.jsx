@@ -1,6 +1,7 @@
 import React from 'react';
 import FormInput from '../FormInput';
 import SelectFileType from '../BaseMapSetting/SelectFileType';
+import { getFileExtension } from '../../utils/getMapExtension';
 
 function LocalSource({
   options,
@@ -9,6 +10,8 @@ function LocalSource({
   fileNameInput,
   onChangeFileNameInput,
   onChangeUploadedFile,
+  uploadedFile,
+
 }) {
   return (
     <div>
@@ -23,9 +26,8 @@ function LocalSource({
           Choose File
           <input type="file" hidden onChange={onChangeUploadedFile} />
         </label>
-        <FormInput isDisabled inputStyle="rounded-tl-none rounded-bl-none" />
+        <FormInput isDisabled inputStyle="rounded-tl-none rounded-bl-none" value={uploadedFile && `${fileNameInput}.${getFileExtension(uploadedFile[0].name)}`} />
       </div>
-
     </div>
   );
 }

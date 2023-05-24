@@ -6,7 +6,7 @@ import LocalSource from './InputLocal/LocalSource';
 
 const options = [
   { value: '.geojson', label: 'GeoJSON(.geojson)' },
-  { value: '.kml,', label: 'KML (.kml)' },
+  { value: '.kml', label: 'KML (.kml)' },
   { value: '.kmz', label: 'KMZ(.kmz)' },
   { value: '.geotiff, .tif , .tiff', label: 'GeoTiff(.geotiff, .tif, .tiff)' },
   { value: '.dted', label: 'DTED(.dted)' },
@@ -29,8 +29,8 @@ function EditModal({
       isActive: false,
     },
   ]);
-  const [fileNameInput, onChangeFileNameInput] = useInput();
-  const [selectFileTypeValue, onChangeSelectFileTypeValue] = useInput();
+  const [fileNameInput, onChangeFileNameInput, setFileNameInput] = useInput();
+  const [selectFileTypeValue, onChangeSelectFileTypeValue, setSelectFileTypeInput] = useInput();
   const [uploadedFile, setUploadedFile] = useState();
 
   const onClickSourceNavHandler = ({ target }) => {
@@ -47,6 +47,12 @@ function EditModal({
   const onChangeUploadedFile = ({ target }) => {
     setUploadedFile(target.files);
   };
+  const onUpdateHandler = (e, { id, newData }) => {
+    onUpdate(e, { id, newData });
+    setFileNameInput('');
+    setSelectFileTypeInput('');
+    setUploadedFile('');
+  };
 
   return isEdit ? (
     <>
@@ -54,7 +60,7 @@ function EditModal({
       <FormModal
         formHeaderText="Edit Map Data"
         formStyle="bg-white"
-        onUpdateHandler={onUpdate}
+        onUpdateHandler={onUpdateHandler}
         mapId={mapId}
         fileNameInput={fileNameInput}
         selectFileTypeValue={selectFileTypeValue}
@@ -84,6 +90,7 @@ function EditModal({
               fileNameInput={fileNameInput}
               onChangeFileNameInput={onChangeFileNameInput}
               onChangeUploadedFile={onChangeUploadedFile}
+              uploadedFile={uploadedFile}
             />
             <div className="flex justify-end mt-6 gap-3">
               <button type="button" className="px-5 py-2 border rounded-lg bg-[#808080] text-white" onClick={onCancel}>Cancel</button>
