@@ -86,10 +86,10 @@ describe('Map List Reducer', () => {
     const initialState = [{ no: 1, map: 'asd', source: 'asd.geojson' }, { no: 2, map: 'test', source: 'test.tiff' }];
     const newData = {
       map: 'map baru',
-      source: 'source baru',
+      fileSource: 'source baru',
     };
     const action = {
-      type: 'UPDATE/MAPLIST',
+      type: ACTION_TYPE.putMapListType,
       payload: {
         id: 2,
         newData: {
@@ -97,18 +97,34 @@ describe('Map List Reducer', () => {
         },
       },
     };
+    const filterState = initialState.filter((value) => value.no === action.payload.id)[0];
 
     const reducer = mapListReducer(initialState, action);
-    const mapIndex = initialState.findIndex((mapItem) => mapItem.no === action.payload.id);
-    initialState[mapIndex] = {
-      ...action.payload.newData,
-    };
+
+    expect(reducer).toEqual(
+      [{
+        ...filterState,
+        map: action.payload.newData.map,
+        source: action.payload.newData.fileSource,
+      }, ...initialState.filter((value) => value.no !== action.payload.id)],
+    );
     expect(reducer).toHaveLength(2);
-    expect(reducer[mapIndex].map).toBe(action.payload.newData.map);
-    expect(reducer[mapIndex].source).toBe(action.payload.newData.source);
-    expect(reducer).toEqual([{ ...initialState[0] }, {
-      ...initialState[mapIndex],
-      ...action.payload.newData,
-    }]);
+  });
+  it('Should return initial state with new data when given by add action creator', () => {
+    const initialState = [{ no: 1, map: 'asd', source: 'asd.geojson' }, { no: 2, map: 'test', source: 'test.tiff' }];
+    const action = {
+      type: ACTION_TYPE.addMapListType,
+      payload: {
+        id: 'asdsa',
+        map: 'map data baru',
+        source: 'mapBaru.tiff',
+      },
+    };
+
+    const nextState = mapListReducer(initialState, action);
+    expect(nextState).toHaveLength(3);
+    expect(nextState).toEqual([
+      { no: action.payload.id, map: action.payload.map, source: action.payload.source },
+      ...initialState]);
   });
 });

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Overlay from './Overlay';
 import FormModal from './FormModal';
-import FormInput from './FormInput';
 import useInput from '../hooks/useInput';
-import SelectFileType from './BaseMapSetting/SelectFileType';
+import LocalSource from './InputLocal/LocalSource';
 
 const options = [
   { value: '.geojson', label: 'GeoJSON(.geojson)' },
@@ -17,7 +16,9 @@ const options = [
   { value: '.jp2', label: 'JP2 (.jp2)' },
 ];
 
-function EditModal({ isEdit, onCancel, onUpdate }) {
+function EditModal({
+  isEdit, onCancel, onUpdate, mapId,
+}) {
   const [sourceNav, setSourceNav] = useState([
     {
       sourceName: 'Local Source',
@@ -30,6 +31,7 @@ function EditModal({ isEdit, onCancel, onUpdate }) {
   ]);
   const [fileNameInput, onChangeFileNameInput] = useInput();
   const [selectFileTypeValue, onChangeSelectFileTypeValue] = useInput();
+  const [uploadedFile, setUploadedFile] = useState();
 
   const onClickSourceNavHandler = ({ target }) => {
     setSourceNav((prevState) => prevState.map((source) => {
@@ -42,10 +44,22 @@ function EditModal({ isEdit, onCancel, onUpdate }) {
     }));
   };
 
+  const onChangeUploadedFile = ({ target }) => {
+    setUploadedFile(target.files);
+  };
+
   return isEdit ? (
     <>
       <Overlay overlayStyle="bg-[rgba(255,255,255,.7)]" />
-      <FormModal formHeaderText="Edit Map Data" formStyle="bg-white">
+      <FormModal
+        formHeaderText="Edit Map Data"
+        formStyle="bg-white"
+        onUpdateHandler={onUpdate}
+        mapId={mapId}
+        fileNameInput={fileNameInput}
+        selectFileTypeValue={selectFileTypeValue}
+        uploadedFile={uploadedFile}
+      >
         <div className="after:block after:contents-[''] after:w-full after:h-[2px] after:bg-gray">
           <div className="flex w-full justify-between">
             {sourceNav.map((source) => (
@@ -63,19 +77,23 @@ function EditModal({ isEdit, onCancel, onUpdate }) {
         </div>
         {sourceNav[0].isActive ? (
           <>
-            <FormInput inputPlaceholder="File Name" inputType="text" inputStyle="mt-8 my-7" value={fileNameInput} onChange={onChangeFileNameInput} />
-            <SelectFileType
-              fileTypes={options}
-              value={selectFileTypeValue}
-              onChangeValue={onChangeSelectFileTypeValue}
+            <LocalSource
+              options={options}
+              selectFileTypeValue={selectFileTypeValue}
+              onChangeSelectFileTypeValue={onChangeSelectFileTypeValue}
+              fileNameInput={fileNameInput}
+              onChangeFileNameInput={onChangeFileNameInput}
+              onChangeUploadedFile={onChangeUploadedFile}
             />
             <div className="flex justify-end mt-6 gap-3">
               <button type="button" className="px-5 py-2 border rounded-lg bg-[#808080] text-white" onClick={onCancel}>Cancel</button>
-              <button type="submit" className="px-5 py-2 border rounded-lg bg-[#1A56DB] text-white" onClick={onUpdate}>Update</button>
+              <button type="submit" className="px-5 py-2 border rounded-lg bg-[#1A56DB] text-white">Update</button>
             </div>
           </>
 
-        ) : null}
+        ) : (
+          <h1>test</h1>
+        )}
       </FormModal>
     </>
   ) : null;

@@ -2,7 +2,7 @@ const ACTION_TYPE = {
   putMapListType: 'PUT/MAPLIST',
   deleteMapListType: 'DELETE/MAPLIST',
   searchMapListType: 'SEARCH/MAPLIST',
-  updateMapListType: 'UPDATE/MAPLIST',
+  addMapListType: 'ADD/MAPLIST',
 };
 
 export default ACTION_TYPE;
