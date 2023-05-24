@@ -506,12 +506,14 @@ const mapListReducer = (state = initialState, action = {}) => {
     case ACTION_TYPE.deleteMapListType:
       return state.filter((map) => map.no !== action.payload.id);
     case ACTION_TYPE.putMapListType:
-      const index = state.findIndex((mapData) => mapData.no === action.type.id);
-      state[index] = {
-        ...state[index],
-        ...action.payload.newData,
+      const mapItemToUpdate = state.filter((mapItem) => mapItem.no === action.payload.id)[0];
+      const newMapItemData = {
+        ...mapItemToUpdate,
+        source: action.payload.newData.fileSource,
+        map: action.payload.newData.map,
       };
-      return [...state];
+      console.log(newMapItemData);
+      return [newMapItemData, ...state.filter((mapData) => mapData.no !== action.payload.id)];
     case ACTION_TYPE.searchMapListType:
       if (action.payload.keyword === '') {
         return initialState;
@@ -519,17 +521,14 @@ const mapListReducer = (state = initialState, action = {}) => {
       return state.filter(
         (mapItem) => mapItem.map.toLowerCase().includes(action.payload.keyword.toLowerCase()),
       );
-    case ACTION_TYPE.updateMapListType:
-      const mapindexToBeUpdated = state.findIndex((mapItem) => mapItem.no === mapItem.id);
-      if (mapindexToBeUpdated === -1) {
-        alert('data not found');
-        return state;
-      }
-      state[mapindexToBeUpdated] = {
-        ...state[mapindexToBeUpdated],
-        ...action.payload.newData,
-      };
-      return state;
+    case ACTION_TYPE.addMapListType:
+      return [{
+        no: action.payload.id,
+        map: action.payload.map,
+        source: action.payload.fileSource,
+      },
+      ...state,
+      ];
     default: return state;
   }
 };

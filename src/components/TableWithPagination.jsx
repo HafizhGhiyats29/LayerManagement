@@ -4,7 +4,7 @@ import { useTable, usePagination, useSortBy } from 'react-table';
 import { FaSortAlphaDown } from 'react-icons/fa';
 import { MdOutlineDeleteForever, MdOutlineEdit } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { deleteMapListActionCreator } from '../states';
+import { deleteMapListActionCreator, editMapListActionCreator } from '../states';
 import PaginationButton from './BaseMapSetting/PaginationButton';
 import ModalDelete from './ModalDelete';
 import EditModal from './EditModal';
@@ -15,7 +15,7 @@ function TableWithPagination({
   const [mapId, setMapId] = useState(0);
   const dispatch = useDispatch();
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-  // const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const onClickDeleteButton = (MapId) => {
     setIsShowModalDelete(true);
     setMapId(MapId);
@@ -31,9 +31,20 @@ function TableWithPagination({
     onCancelDeleteMapHandler();
   };
 
-  // const onEditMapHandler(id, {map, source}) => {
-  //   setIsEdit(true);
-  // }
+  const setOnButtonClickEditMapHandler = (editValue) => {
+    setIsEdit(editValue);
+  };
+
+  const onUpdate = (e, { id, newData }) => {
+    e.preventDefault();
+    dispatch(editMapListActionCreator({ id, newData }));
+    setOnButtonClickEditMapHandler(false);
+  };
+
+  const onClickEditButton = (id) => {
+    setOnButtonClickEditMapHandler(true);
+    setMapId(id);
+  };
   useEffect(() => {
     console.log(tableDatas.length);
   }, [tableDatas.length]);
@@ -51,7 +62,7 @@ function TableWithPagination({
       accessor: 'no',
       Cell: ({ row }) => (
         <div className="flex justify-center items-center text-xl gap-4">
-          <button type="button" onClick={() => console.log(tableDatas)}>
+          <button type="button" onClick={() => onClickEditButton(row.original.no)}>
             <MdOutlineEdit />
           </button>
           <button
@@ -140,7 +151,12 @@ function TableWithPagination({
         onDelete={onDeleteMapHandler}
         onCancel={onCancelDeleteMapHandler}
       />
-      <EditModal isEdit />
+      <EditModal
+        isEdit={isEdit}
+        onCancel={() => setOnButtonClickEditMapHandler(false)}
+        onUpdate={onUpdate}
+        mapId={mapId}
+      />
 
     </div>
   );

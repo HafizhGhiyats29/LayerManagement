@@ -22,10 +22,11 @@ export const searchMapListActionCreator = (keyword) => ({
   },
 });
 
-export const updateMapListActionCreator = (id, newData) => ({
-  type: ACTION_TYPE.updateMapListType,
+export const addMapListActionCreator = ({ no, map, source }) => ({
+  type: ACTION_TYPE,
   payload: {
-    id,
-    newData,
+    no,
+    map,
+    source,
   },
 });
