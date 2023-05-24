@@ -1,20 +1,22 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-export const fetchMaps = createAsyncThunk("maps/fetchMaps", async () => {
-  const response = await axios.get("http://192.168.6.191:8080/api/basemaps/?limit=10");
+export const fetchMaps = createAsyncThunk('maps/fetchMaps', async () => {
+  const response = await axios.get('http://192.168.6.191:8080/api/basemaps/?limit=10');
   return response.data;
 });
 
 const mapSlice = createSlice({
-  name: "maps",
+  name: 'maps',
   initialState: [],
   reducers: {
     addMap: (state, action) => {
       state.push(action.payload);
     },
     editMap: (state, action) => {
-      const {id,name,title,file } = action.payload;
+      const {
+        id, name, title, file,
+      } = action.payload;
       const existingMapIndex = state.findIndex((basemap) => basemap.id === id);
       if (existingMapIndex !== -1) {
         existingMapIndex.name = name;
@@ -28,19 +30,19 @@ const mapSlice = createSlice({
         state.splice(state.findIndex(existingMapIndex), 1);
       }
     },
-   
+
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMaps.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
       })
       .addCase(fetchMaps.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = 'succeeded';
         state.maps = action.payload;
       })
       .addCase(fetchMaps.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error.message;
       });
   },

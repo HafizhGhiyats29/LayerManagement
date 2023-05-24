@@ -504,7 +504,6 @@ const initialState = [{ no: 1, map: 'Smolensk', source: 'NuncCommodo.ppt' },
 const mapListReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ACTION_TYPE.deleteMapListType:
-      console.log(action.payload.id);
       return state.filter((map) => map.no !== action.payload.id);
     case ACTION_TYPE.putMapListType:
       const index = state.findIndex((mapData) => mapData.no === action.type.id);
@@ -517,14 +516,20 @@ const mapListReducer = (state = initialState, action = {}) => {
       if (action.payload.keyword === '') {
         return initialState;
       }
-      const mapIndex = state.findIndex(
+      return state.filter(
         (mapItem) => mapItem.map.toLowerCase().includes(action.payload.keyword.toLowerCase()),
       );
-      if (mapIndex === -1) {
-        return [];
+    case ACTION_TYPE.updateMapListType:
+      const mapindexToBeUpdated = state.findIndex((mapItem) => mapItem.no === mapItem.id);
+      if (mapindexToBeUpdated === -1) {
+        alert('data not found');
+        return state;
       }
-      console.log(action.payload.keyword);
-      return [{ ...state[mapIndex] }];
+      state[mapindexToBeUpdated] = {
+        ...state[mapindexToBeUpdated],
+        ...action.payload.newData,
+      };
+      return state;
     default: return state;
   }
 };

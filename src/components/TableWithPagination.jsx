@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { deleteMapListActionCreator } from '../states';
 import PaginationButton from './BaseMapSetting/PaginationButton';
 import ModalDelete from './ModalDelete';
+import EditModal from './EditModal';
 
 function TableWithPagination({
   tableColumns = [], tableDatas = [], headerStyle = '', rowStyle,
@@ -14,6 +15,7 @@ function TableWithPagination({
   const [mapId, setMapId] = useState(0);
   const dispatch = useDispatch();
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+  // const [isEdit, setIsEdit] = useState(false);
   const onClickDeleteButton = (MapId) => {
     setIsShowModalDelete(true);
     setMapId(MapId);
@@ -28,6 +30,10 @@ function TableWithPagination({
     dispatch(deleteMapListActionCreator(id));
     onCancelDeleteMapHandler();
   };
+
+  // const onEditMapHandler(id, {map, source}) => {
+  //   setIsEdit(true);
+  // }
   useEffect(() => {
     console.log(tableDatas.length);
   }, [tableDatas.length]);
@@ -134,6 +140,7 @@ function TableWithPagination({
         onDelete={onDeleteMapHandler}
         onCancel={onCancelDeleteMapHandler}
       />
+      <EditModal isEdit />
 
     </div>
   );

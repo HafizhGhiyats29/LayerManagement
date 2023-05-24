@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addMap } from "./mapSlice";
-import axios from "axios";
-import NameInput from "../../components/NameInput";
-import UrlInput from "../../components/InputWeb/UrlInput";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { addMap } from './mapSlice';
+import NameInput from '../../components/NameInput';
+import UrlInput from '../../components/InputWeb/UrlInput';
 
-const AddWeb = () => {
+function AddWeb() {
   const dispatch = useDispatch();
 
-  const [urlInputType, setUrlInput] = useState("");
+  const [urlInputType, setUrlInput] = useState('');
   const [input, setInput] = useState({
-    name: "",
+    name: '',
   });
 
   const handleChange = (e) => {
@@ -27,27 +27,27 @@ const AddWeb = () => {
   const handleAddData = (e) => {
     e.preventDefault();
     if (!urlInputType) {
-      alert("Please enter a URL");
+      alert('Please enter a URL');
       return;
     }
 
     const formData = new FormData();
-    formData.append("url", urlInputType);
-    formData.append("name", input.name);
+    formData.append('url', urlInputType);
+    formData.append('name', input.name);
 
     axios
-      .post("http://192.168.6.177:8080/api/basemaps/", formData)
+      .post('http://192.168.6.177:8080/api/basemaps/', formData)
       .then((response) => {
         if (response.status === 201) {
           dispatch(addMap(response.data));
-          alert("Map successfully added!");
+          alert('Map successfully added!');
         } else {
-          alert("Failed to add map. Please try again.");
+          alert('Failed to add map. Please try again.');
         }
       })
       .catch((error) => {
         console.error(error);
-        alert("Failed to add map. Please try again.");
+        alert('Failed to add map. Please try again.');
       });
   };
 
@@ -71,6 +71,6 @@ const AddWeb = () => {
       </div>
     </form>
   );
-};
+}
 
 export default AddWeb;

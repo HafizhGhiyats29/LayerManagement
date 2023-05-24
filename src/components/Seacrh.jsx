@@ -1,8 +1,7 @@
-
-import { FiSearch } from "react-icons/fi";
+import React from 'react';
+import { FiSearch } from 'react-icons/fi';
 
 function Search({ state, setState }) {
-
   return (
     <div className="">
       <div className="flex items-center bg-gray px-3 py-2 rounded-md">
