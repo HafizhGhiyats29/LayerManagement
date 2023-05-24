@@ -22,9 +22,14 @@ function BaseMapSettingPage() {
       <SideBarMapSetting />
       <Routes>
         <Route path="/" element={<BaseMapContent><MapListContent searchKeywordValue={searchKeywordValue} onSearchKeywordValueChange={onChangeSearchKeyword} /></BaseMapContent>} />
-        <Route path="/add-map" element={<BaseMapContent>
-        <OnlineSource/>
-        </BaseMapContent>} />
+        <Route
+          path="/add-map"
+          element={(
+            <BaseMapContent>
+              <OnlineSource />
+            </BaseMapContent>
+            )}
+        />
       </Routes>
     </article>
   );

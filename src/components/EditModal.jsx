@@ -4,7 +4,6 @@ import FormModal from './FormModal';
 import useInput from '../hooks/useInput';
 import LocalSource from './InputLocal/LocalSource';
 import OnlineSource from './InputWeb/OnlineSource';
-import { MdOutlineFileUpload } from 'react-icons/md'
 
 const options = [
   { value: '.geojson', label: 'GeoJSON(.geojson)' },
@@ -33,7 +32,8 @@ function EditModal({
   ]);
   const [fileNameInput, onChangeFileNameInput, setFileNameInput] = useInput();
   const [selectFileTypeValue, onChangeSelectFileTypeValue, setSelectFileTypeInput] = useInput();
-  const [uploadedFile, setUploadedFile] = useState();
+  const [fileSource, setFileSource] = useState();
+  const [fileSourceFromUrl, onChangeFileSourceFromUrlHandler] = useInput();
 
   const onClickSourceNavHandler = ({ target }) => {
     setSourceNav((prevState) => prevState.map((source) => {
@@ -47,13 +47,13 @@ function EditModal({
   };
 
   const onChangeUploadedFile = ({ target }) => {
-    setUploadedFile(target.files);
+    setFileSource(target.files);
   };
   const onUpdateHandler = (e, { id, newData }) => {
     onUpdate(e, { id, newData });
     setFileNameInput('');
     setSelectFileTypeInput('');
-    setUploadedFile('');
+    setFileSource('');
   };
 
   return isEdit ? (
@@ -66,7 +66,8 @@ function EditModal({
         mapId={mapId}
         fileNameInput={fileNameInput}
         selectFileTypeValue={selectFileTypeValue}
-        uploadedFile={uploadedFile}
+        uploadedFile={fileSource}
+        fileSourceFromUrl={fileSourceFromUrl}
       >
         <div className="after:block after:contents-[''] after:w-full after:h-[2px] after:bg-gray">
           <div className="flex w-full justify-between">
@@ -92,7 +93,7 @@ function EditModal({
               fileNameInput={fileNameInput}
               onChangeFileNameInput={onChangeFileNameInput}
               onChangeUploadedFile={onChangeUploadedFile}
-              uploadedFile={uploadedFile}
+              fileSource={fileSource}
             />
             <div className="flex justify-end mt-6 gap-3">
               <button type="button" className="px-5 py-2 border rounded-lg bg-[#808080] text-white" onClick={onCancel}>Cancel</button>
@@ -102,10 +103,16 @@ function EditModal({
 
         ) : (
           <div className="">
-            <OnlineSource />
+            <OnlineSource
+              fileName={fileNameInput}
+              onChangeFileName={onChangeFileNameInput}
+              fileSource={fileSourceFromUrl}
+              onChangeFileSource={onChangeFileSourceFromUrlHandler}
+              onChangeSelectFileTypeValue={onChangeSelectFileTypeValue}
+            />
             <div className="flex justify-end mt-6 gap-3">
               <button type="button" className="px-5 py-2 border rounded-lg bg-[#808080] text-white" onClick={onCancel}>Cancel</button>
-              <button type="submit" className="px-5 py-2 border rounded-lg bg-[#1A56DB] text-white" onClick={onUpdate}>Update</button>
+              <button type="submit" className="px-5 py-2 border rounded-lg bg-[#1A56DB] text-white">Update</button>
             </div>
           </div>
         )}
