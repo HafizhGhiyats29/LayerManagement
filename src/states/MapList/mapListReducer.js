@@ -512,7 +512,6 @@ const mapListReducer = (state = initialState, action = {}) => {
         source: action.payload.newData.fileSource,
         map: action.payload.newData.map,
       };
-      console.log(newMapItemData);
       return [newMapItemData, ...state.filter((mapData) => mapData.no !== action.payload.id)];
     case ACTION_TYPE.searchMapListType:
       if (action.payload.keyword === '') {

@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import { FaSortAlphaDown } from 'react-icons/fa';
 import { MdOutlineDeleteForever, MdOutlineEdit } from 'react-icons/md';
@@ -44,9 +44,6 @@ function TableWithPagination({
     setOnButtonClickEditMapHandler(true);
     setMapId(id);
   };
-  useEffect(() => {
-    console.log(tableDatas.length);
-  }, [tableDatas.length]);
 
   const columns = useMemo(() => [
     {

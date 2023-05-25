@@ -23,10 +23,10 @@ export const searchMapListActionCreator = (keyword) => ({
 });
 
 export const addMapListActionCreator = ({ no, map, source }) => ({
-  type: ACTION_TYPE,
+  type: ACTION_TYPE.addMapListType,
   payload: {
     no,
     map,
-    source,
+    fileSource: source,
   },
 });

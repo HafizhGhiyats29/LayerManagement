@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function NavigationLink({ options = [] }) {
-  const [navLinkOptions, setNavLinkOptions] = useState(options);
-
+function NavigationLink({ options = [], setOptions }) {
   const onClickButtonHandler = ({ target }) => {
-    console.log(target.name);
-    setNavLinkOptions((prevState) => prevState.map((navLink) => {
+    setOptions((prevState) => prevState.map((navLink) => {
       if (navLink.name === target.name) {
         navLink.isActive = true;
       } else {
@@ -18,7 +15,7 @@ function NavigationLink({ options = [] }) {
   return (
     <div className="after:contents-[''] after:block after:bg-gray after:h-1 after:w-full">
       <div className="flex w-full justify-center gap-8">
-        {navLinkOptions.map((option) => (
+        {options.map((option) => (
           <button
             type="button"
             key={option.name}

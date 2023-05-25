@@ -5,4 +5,5 @@ export {
   deleteMapListActionCreator,
   editMapListActionCreator,
   searchMapListActionCreator,
+  addMapListActionCreator,
 } from './MapList/actionCreator';

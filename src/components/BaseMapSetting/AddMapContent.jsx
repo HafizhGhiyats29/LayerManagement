@@ -1,25 +1,28 @@
 import React from 'react';
-import OnlineSource from '../InputWeb/OnlineSource';
 import NavigationLink from '../NavigationLink';
 
-const options = [
-  {
-    name: 'Local Source',
-    isActive: true,
-  },
-  {
-    name: 'Remote Sources',
-    isActive: false,
-  },
-];
-
-function AddMapContent({ title }) {
+function AddMapContent({
+  title, sourceComponent, subNavOptions, setOptions, onAddHandler,
+}) {
   return (
-    <div className="w-1/3 mx-auto bg-white py-10 px-4">
-      <h1>{title}</h1>
-      <NavigationLink options={options} />
-      <OnlineSource />
-    </div>
+    <article className="w-[30%] mx-auto mt-10">
+      <section className="mb-8">
+        <NavigationLink options={subNavOptions} setOptions={setOptions} />
+      </section>
+      <section className="mx-auto bg-white p-10">
+        <h1 className="font-bold text-xl">{title}</h1>
+        {sourceComponent}
+        <div className="flex justify-end mt-6 gap-3">
+          <button
+            type="button"
+            className="px-5 py-2 border rounded-lg bg-[#1A56DB] text-white"
+            onClick={onAddHandler}
+          >
+            {subNavOptions[0].isActive ? 'Add' : 'Upload'}
+          </button>
+        </div>
+      </section>
+    </article>
   );
 }
 

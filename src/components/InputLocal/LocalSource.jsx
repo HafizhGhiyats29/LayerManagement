@@ -11,7 +11,6 @@ function LocalSource({
   onChangeFileNameInput,
   onChangeUploadedFile,
   uploadedFile,
-
 }) {
   return (
     <div>

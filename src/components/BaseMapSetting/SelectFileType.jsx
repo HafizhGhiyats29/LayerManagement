@@ -7,13 +7,18 @@ import {
 function SelectFileType({
   fileTypes = [], selectStyle, value, onChangeValue,
 }) {
-  console.log(fileTypes);
   return (
     <FormControl fullWidth>
       <InputLabel id="simple-select-label">File Type</InputLabel>
-      <Select value={value} onChange={onChangeValue} labelId="simple-select-label" label="File Type" className={`rounded-xl ${selectStyle}`}>
+      <Select
+        value={value}
+        onChange={onChangeValue}
+        labelId="simple-select-label"
+        label="File Type"
+        className={`rounded-xl ${selectStyle}`}
+      >
         {fileTypes.map((fileType) => (
-          <MenuItem value={fileType.value} className="text-sm">{fileType.label}</MenuItem>
+          <MenuItem value={fileType.value} className="text-sm" key={fileType.label}>{fileType.label}</MenuItem>
         ))}
       </Select>
     </FormControl>
