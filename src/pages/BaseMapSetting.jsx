@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { BsCheckLg } from 'react-icons/bs';
 import SideBarMapSetting from '../components/BaseMapSetting/SidebarMapSetting';
 import BaseMapContent from '../components/BaseMapSetting/BaseMapContent';
 import MapListContent from '../components/BaseMapSetting/MapListContent';
@@ -44,6 +43,7 @@ function BaseMapSettingPage() {
   const [selectTypeValue, onChangeSelectTypeValue, setSelectTypeValue] = useInput();
   const [uploadedFile, setUploadedFile] = useState();
   const [fileSource, onChangeFileSourceHandler, setFileSource] = useInput();
+  const [isAddSuccess, setIsAddSuccess] = useState(false);
 
   const onChangeUploadedFileHandler = ({ target }) => {
     setUploadedFile(target.files);
@@ -68,6 +68,10 @@ function BaseMapSettingPage() {
       no: +new Date(),
     }));
     cleanAllDataSource();
+    setIsAddSuccess(true);
+  };
+  const onClose = () => {
+    setIsAddSuccess(false);
     navigate('/map-setting/');
   };
 
@@ -78,7 +82,7 @@ function BaseMapSettingPage() {
         <Route
           path="/"
           element={(
-            <BaseMapContent>
+            <BaseMapContent onClose={onClose} isShow={isAddSuccess}>
               <MapListContent
                 searchKeywordValue={searchKeywordValue}
                 onSearchKeywordValueChange={onChangeSearchKeyword}
@@ -95,6 +99,7 @@ function BaseMapSettingPage() {
                 options={options}
                 onAddHandler={onAddHandler}
                 subNavOptions={options}
+                onCLose={onClose}
                 sourceComponent={options[0].isActive
                   ? (
                     <LocalSource
@@ -123,12 +128,7 @@ function BaseMapSettingPage() {
             )}
         />
       </Routes>
-      <ModalSuccess
-        isShow
-        buttonDescription="Ok"
-        messageDescription="Upload Success"
-        successIcon={<BsCheckLg />}
-      />
+      <ModalSuccess buttonDescription="OK" messageDescription="Upload Success!" isShow={isAddSuccess} onClose={onClose} />
     </article>
   );
 }

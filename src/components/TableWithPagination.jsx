@@ -8,6 +8,7 @@ import { deleteMapListActionCreator, editMapListActionCreator } from '../states'
 import PaginationButton from './BaseMapSetting/PaginationButton';
 import ModalDelete from './ModalDelete';
 import EditModal from './EditModal';
+import ModalSuccess from './ModalSuccess';
 
 function TableWithPagination({
   tableColumns = [], tableDatas = [], headerStyle = '', rowStyle,
@@ -16,6 +17,8 @@ function TableWithPagination({
   const dispatch = useDispatch();
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
+  const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
   const onClickDeleteButton = (MapId) => {
     setIsShowModalDelete(true);
     setMapId(MapId);
@@ -28,6 +31,7 @@ function TableWithPagination({
   const onDeleteMapHandler = (id) => {
     dispatch(deleteMapListActionCreator(id));
     onCancelDeleteMapHandler();
+    setIsDeleteSuccess(true);
   };
 
   const setOnButtonClickEditMapHandler = (editValue) => {
@@ -38,11 +42,17 @@ function TableWithPagination({
     e.preventDefault();
     dispatch(editMapListActionCreator({ id, newData }));
     setOnButtonClickEditMapHandler(false);
+    setIsUpdateSuccess(true);
   };
 
   const onClickEditButton = (id) => {
     setOnButtonClickEditMapHandler(true);
     setMapId(id);
+  };
+
+  const onClose = () => {
+    setIsDeleteSuccess(false);
+    setIsUpdateSuccess(false);
   };
 
   const columns = useMemo(() => [
@@ -153,7 +163,11 @@ function TableWithPagination({
         onUpdate={onUpdate}
         mapId={mapId}
       />
+      {/* Modal Delete Success */}
+      <ModalSuccess isShow={isDeleteSuccess} buttonDescription="OK" messageDescription="Delete Success!" onClose={onClose} />
 
+      {/* Modal Update Success */}
+      <ModalSuccess isShow={isUpdateSuccess} buttonDescription="OK" messageDescription="Update Success!" onClose={onClose} />
     </div>
   );
 }
