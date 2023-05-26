@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import NavBaseMap from './NavBaseMap';
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import NavBaseMap from "./NavLayer";
 
-function NavbarMapSetting() {
+function NavbarLayerSetting() {
   const location = useLocation();
   const [subNav] = useState([
     {
-      navName: 'Map List',
-      href: '/',
+      navName: "Layer List",
+      href: "/",
       isActive: true,
     },
     {
-      navName: 'Add Map',
-      href: '/add-map',
+      navName: "Add Layer",
+      href: "/add-map",
       isActive: false,
     },
   ]);
@@ -25,14 +25,7 @@ function NavbarMapSetting() {
           } else {
             subnav.isActive = false;
           }
-          return (
-            <NavBaseMap
-              navName={subnav.navName}
-              href={subnav.href}
-              isActive={subnav.isActive}
-              key={subnav.href}
-            />
-          );
+          return <NavBaseMap navName={subnav.navName} href={subnav.href} isActive={subnav.isActive} key={subnav.href} />;
         })}
       </nav>
       <hr className="text-black" />
@@ -40,4 +33,4 @@ function NavbarMapSetting() {
   );
 }
 
-export default NavbarMapSetting;
+export default NavbarLayerSetting;

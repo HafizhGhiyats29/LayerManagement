@@ -1,17 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import TableWithPagination from '../TableWithPagination';
+import React from "react";
+import { useSelector } from "react-redux";
+import TableWithPagination from "../TableWithPagination";
 
 function BaseMapTable() {
   const { listMap } = useSelector((states) => states);
   const tableColumns = [
     {
-      Header: 'Map',
-      accessor: 'map',
+      Header: "Map",
+      accessor: "map",
     },
     {
-      Header: 'Source',
-      accessor: 'source',
+      Header: "Source",
+      accessor: "source",
     },
   ];
 

@@ -1,9 +1,7 @@
-import React from 'react';
-import NavigationLink from '../NavigationLink';
+import React from "react";
+import NavigationLink from "../NavigationLink";
 
-function AddMapContent({
-  title, sourceComponent, subNavOptions, setOptions, onAddHandler,
-}) {
+function AddLayerContent({ title, sourceComponent, subNavOptions, setOptions, onAddHandler }) {
   return (
     <article className="w-[30%] mx-auto mt-10">
       <section className="mb-8">
@@ -13,12 +11,8 @@ function AddMapContent({
         <h1 className="font-bold text-xl">{title}</h1>
         {sourceComponent}
         <div className="flex justify-end mt-6 gap-3">
-          <button
-            type="button"
-            className="px-5 py-2 border rounded-lg bg-[#1A56DB] text-white"
-            onClick={onAddHandler}
-          >
-            {subNavOptions[0].isActive ? 'Add' : 'Upload'}
+          <button type="button" className="px-5 py-2 border rounded-lg bg-[#1A56DB] text-white" onClick={onAddHandler}>
+            {subNavOptions[0].isActive ? "Add" : "Upload"}
           </button>
         </div>
       </section>
@@ -26,4 +20,4 @@ function AddMapContent({
   );
 }
 
-export default AddMapContent;
+export default AddLayerContent;

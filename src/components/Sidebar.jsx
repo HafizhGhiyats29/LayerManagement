@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
-import { FaBars } from 'react-icons/fa';
-import { SlSettings, SlArrowLeft } from 'react-icons/sl';
-import { Link } from 'react-router-dom';
-import Button from './Button';
+import React, { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { SlSettings } from "react-icons/sl";
+import { BsMap } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import Teritorial from "./Layer/Teritorial";
+import Batas from "./Layer/Batas";
+import WilayahDarat from "./Layer/WilayahDarat";
+import WilayahLaut from "./Layer/WilayahLaut";
+import Navigasi from "./Layer/Navigasi";
+import Cuaca from "./Layer/Cuaca";
+import Udara from "./Layer/Udara";
+import Laporan from "./Layer/Laporan";
+import Vital from "./Layer/Vital";
+import Radar from "./Layer/Radar";
+import Button from "./Button";
 
 function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -13,56 +24,76 @@ function Sidebar() {
 
   return (
     <div className="flex h-screen">
-      <div
-        className={`fixed inset-y-0 left-0 z-10 w-72 bg-gray text-black px-6 py-6 transform transition duration-300 ease-in-out ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div className="bg-white w-full h-full rounded-sm ">
-          <h1 className="font-bold text-black text-xl px-6 py-2">Layers</h1>
-          <ul>
+      <div className={`fixed inset-y-0 left-0 z-10 w-72 bg-[#F5F5F5]/95 text-black px-5 pt-2 pb-4 transform transition duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <p className=" text-black text-2xl ">Layers</p>
+        <div className="mt-3  max-h-[calc(84vh-72px)] scrollbar-thin scrollbar-track-[#F5F5F5] scrollbar-thumb-blue overflow-y-scroll">
+          <ul className="space-y-3">
             <li>
-              <div className="text-black grid justify-center text-center py-4 ">
-                <Button> Tes maps</Button>
-                <Button> Tes maps</Button>
-                <Link to="/add-data">
-                  <Button>Data Map</Button>
-                </Link>
-              </div>
+              <Teritorial />
+            </li>
+            <li>
+              <Batas />
+            </li>
+            <li>
+              <WilayahDarat />
+            </li>
+            <li>
+              <WilayahLaut />
+            </li>
+            <li>
+              <Navigasi />
+            </li>
+            <li>
+              <Cuaca />
+            </li>
+            <li>
+              <Radar />
+            </li>
+            <li>
+              <Udara />
+            </li>
+            <li>
+              <Laporan />
+            </li>
+            <li>
+              <Vital />
             </li>
           </ul>
+          {/* <div className="scrollbar-thin scrollbar-track-[#F5F5F5] scrollbar-thumb-blue"></div> */}
+        </div>
+        <button className={`absolute top-12 -right-7 rounded-r-md transition duration-300 bg-white py-1 px-2 h-[35px] ${isSidebarOpen ? "opacity-80" : "opacity-0"}`} onClick={handleSidebarToggle} type="button">
+          <FaTimes size={23} />
+        </button>
+      </div>
+      <div className={`flex-1 h-screen overflow-y-auto duration-300 ${isSidebarOpen ? "ml-72" : ""}`}>
+        <div className={`absolute bg-white rounded-md py-1 px-2 top-4 ml-3  opacity-80 `}>
+          <button onClick={handleSidebarToggle} type="button">
+            <FaBars size={20} />
+          </button>
+        </div>
+
+        <div className="absolute  bg-white rounded-md py-1 top-[60px]  ml-3 w-36 opacity-80">
           <Link to="map-setting">
-            <button className="absolute flex text-black bottom-0 mb-6 py-4 px-6" type="button">
-              <SlSettings className="mr-2 text-2xl font-bold" />
-              Map Setting
+            <button className="flex py-1" type="button">
+              <BsMap size={15} className="ml-2 mr-1 " />
+              <p className=" text-[12px]">Map Settings</p>
+            </button>
+          </Link>
+          <Link to="">
+            <button className="flex border-y-[1px] border-[#A0A7AB] py-2 w-full" type="button">
+              <SlSettings size={15} className="ml-2 mr-1 " />
+              <p className=" text-[12px]">User Management</p>
+            </button>
+          </Link>
+          <Link to="">
+            <button className="flex py-1" type="button">
+              <SlSettings size={15} className="ml-2 mr-1 " />
+              <p className=" text-[12px]">Options</p>
             </button>
           </Link>
         </div>
-        <button
-          className={`absolute top-7 -right-6 transition duration-300 ${
-            isSidebarOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          onClick={handleSidebarToggle}
-          type="button"
-        >
-          <SlArrowLeft size={25} className="bg-white py-1 px-2" />
-        </button>
-      </div>
-      <div
-        className={`flex-1 h-screen overflow-y-auto duration-300 ${
-          isSidebarOpen ? 'ml-72' : ''
-        }`}
-      >
-        <div className="absolute bg-white rounded-md py-2 px-2 top-6 ml-9">
-          <button onClick={handleSidebarToggle} type="button">
-            <FaBars />
-          </button>
-        </div>
-        <img
-          src="https://miro.medium.com/max/1200/1*1XFvsDgsLWnAL1GFnaDTOw.png"
-          className="w-full h-full"
-          alt="map contoh"
-        />
+
+        <img src="https://miro.medium.com/max/1200/1*1XFvsDgsLWnAL1GFnaDTOw.png" className="w-full h-full" alt="map contoh" />
       </div>
     </div>
   );
